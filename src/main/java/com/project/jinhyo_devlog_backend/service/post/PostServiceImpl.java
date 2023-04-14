@@ -1,5 +1,6 @@
 package com.project.jinhyo_devlog_backend.service.post;
 
+import com.project.jinhyo_devlog_backend.dto.ImageResponse;
 import com.project.jinhyo_devlog_backend.dto.PostRequest;
 import com.project.jinhyo_devlog_backend.dto.PostResponse;
 import com.project.jinhyo_devlog_backend.entity.hashTag.HashTag;
@@ -215,6 +216,35 @@ public class PostServiceImpl implements PostService {
                 return new ResponseEntity<>(basicResponse, basicResponse.getHttpStatus());
             }
         }
+    }
+
+    @Override
+    public ResponseEntity<BasicResponse> addImage(MultipartFile multipartFile) throws IOException {
+        BasicResponse basicResponse;
+
+        if (multipartFile == null) {
+            basicResponse = BasicResponse.builder()
+                    .code(HttpStatus.OK.value())
+                    .httpStatus(HttpStatus.OK)
+                    .message("이미지를 찾지 못했습니다.")
+                    .build();
+        } else {
+            List<Image> images = imageService.saveImage(List.of(multipartFile));
+
+            ImageResponse imageResponse = ImageResponse.builder()
+                    .image(images.get(0))
+                    .build();
+
+            basicResponse = BasicResponse.builder()
+                    .code(HttpStatus.OK.value())
+                    .httpStatus(HttpStatus.OK)
+                    .message("이미지를 정상적으로 저장했습니다.")
+                    .count(1)
+                    .result(imageResponse)
+                    .build();
+        }
+
+        return new ResponseEntity<>(basicResponse, basicResponse.getHttpStatus());
     }
 
     @Override

@@ -16,9 +16,10 @@ public interface PostService {
 
     ResponseEntity<BasicResponse> addPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException;
 
+    ResponseEntity<BasicResponse> addImage(MultipartFile multipartFile) throws IOException;
+
     ResponseEntity<BasicResponse> editPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException;
 
     ResponseEntity<BasicResponse> deletePost(Long id);
-
 
 }

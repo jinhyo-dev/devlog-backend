@@ -26,6 +26,11 @@ public class AdminController {
         return postService.addPost(postRequest, multipartFiles);
     }
 
+    @PostMapping("/image")
+    public ResponseEntity<BasicResponse> addPost(@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
+        return postService.addImage(multipartFile);
+    }
+
     @PostMapping("/edit")
     public ResponseEntity<BasicResponse> editPost(@RequestPart PostRequest postRequest,
                                                   @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles) throws IOException {
