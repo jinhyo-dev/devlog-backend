@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/test
+    url: jdbc:mariadb://localhost:3306/devlog
     username: root
     password: 1234
 
@@ -17,4 +17,4 @@ spring:
 
 jwt:
   secret:
-    key: eoguddleoguddleoguddleoguddleoguddleoguddleoguddleoguddleoguddleoguddleoguddls
+    key: 0I1dMgWg8tUJ64gIxs1JFVpKLF0bTQpezY76YKoSAxVzxpH98qjbEyLaWOSikfWEWT2o3eNx1Xsqv8oMCJq9HYJQwNzJ0zOBeetl
