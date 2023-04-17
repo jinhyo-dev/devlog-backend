@@ -14,7 +14,7 @@ public interface PostService {
 
     ResponseEntity<BasicResponse> getPost(Long id, String hashTag);
 
-    ResponseEntity<BasicResponse> addPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException;
+    ResponseEntity<BasicResponse> addPost(PostRequest postRequest) throws IOException;
 
     ResponseEntity<BasicResponse> addImage(MultipartFile multipartFile) throws IOException;
 

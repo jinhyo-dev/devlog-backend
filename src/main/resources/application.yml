@@ -15,6 +15,10 @@ spring:
       maxFileSize: 10MB
       maxRequestSize: 20MB
 
+  security:
+    basic:
+      enabled: true
+
 jwt:
   secret:
     key: 0I1dMgWg8tUJ64gIxs1JFVpKLF0bTQpezY76YKoSAxVzxpH98qjbEyLaWOSikfWEWT2o3eNx1Xsqv8oMCJq9HYJQwNzJ0zOBeetl

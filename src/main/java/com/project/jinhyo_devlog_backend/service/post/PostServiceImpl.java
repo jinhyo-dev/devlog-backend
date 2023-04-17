@@ -160,7 +160,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<BasicResponse> addPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException {
+    public ResponseEntity<BasicResponse> addPost(PostRequest postRequest) throws IOException {
         BasicResponse basicResponse;
 
         if (postRequest.getTitle().equals("") || postRequest.getContent().equals("")) {
@@ -175,7 +175,7 @@ public class PostServiceImpl implements PostService {
             Optional<Member> memberOpt = memberRepository.findById(postRequest.getMemberId());
 
             if (memberOpt.isPresent()) {
-                List<Image> images = imageService.saveImage(multipartFiles);
+//                List<Image> images = imageService.saveImage(null);
                 Member member = memberOpt.get();
 
                 Post post = Post.builder()
@@ -192,7 +192,7 @@ public class PostServiceImpl implements PostService {
                 List<PostHashTag> hashTags = hashTagService.checkHashTag(post, postRequest.getHashTag());
 
                 post.setPostHashTags(hashTags);
-                post.setImages(images);
+//                post.setImages(images);
                 member.getPosts().add(post);
 
                 basicResponse = BasicResponse.builder()

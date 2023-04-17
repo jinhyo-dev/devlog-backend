@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                 .httpBasic().disable()
                 // 쿠키 기반이 아닌 JWT 기반이므로 사용하지 않음
                 .csrf().disable()
+                .cors().disable()
                 // Spring Security 세션 정책: 세션을 생성 및 사용하지 않음
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
