@@ -27,7 +27,7 @@ public class JWTProvider {
 
     private Key secretKey;
 
-    private final long exp = 1000L * 60 * 60;
+    private final long exp = 1000L * 60 * 60 * 3;
 
     private final CustomUserDetailsService userDetailsService;
 
