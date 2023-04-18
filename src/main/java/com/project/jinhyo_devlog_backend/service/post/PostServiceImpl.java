@@ -6,6 +6,7 @@ import com.project.jinhyo_devlog_backend.dto.PostResponse;
 import com.project.jinhyo_devlog_backend.entity.hashTag.HashTag;
 import com.project.jinhyo_devlog_backend.entity.hashTag.HashTagRepository;
 import com.project.jinhyo_devlog_backend.entity.image.Image;
+import com.project.jinhyo_devlog_backend.entity.image.ImageRepository;
 import com.project.jinhyo_devlog_backend.entity.member.Member;
 import com.project.jinhyo_devlog_backend.entity.member.MemberRepository;
 import com.project.jinhyo_devlog_backend.entity.post.Post;
@@ -35,6 +36,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
+    private final ImageRepository imageRepository;
 
     private final MemberRepository memberRepository;
 
@@ -173,6 +175,7 @@ public class PostServiceImpl implements PostService {
             return new ResponseEntity<>(basicResponse, basicResponse.getHttpStatus());
         } else {
             Optional<Member> memberOpt = memberRepository.findById(postRequest.getMemberId());
+            Optional<Image> imageOpt = imageRepository.findByFileSaveName(postRequest.getImage());
 
             if (memberOpt.isPresent()) {
 //                List<Image> images = imageService.saveImage(null);
@@ -181,6 +184,8 @@ public class PostServiceImpl implements PostService {
                 Post post = Post.builder()
                         .id(null)
                         .title(postRequest.getTitle())
+                        .image(imageOpt.get())
+                        .info(postRequest.getInfo())
                         .content(postRequest.getContent())
                         .view(0)
                         .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
@@ -268,12 +273,12 @@ public class PostServiceImpl implements PostService {
             imageService.deleteImage(post);
 
             List<PostHashTag> hashTags = hashTagService.checkHashTag(post, postRequest.getHashTag());
-            List<Image> images = imageService.saveImage(multipartFiles);
 
             post.setTitle(postRequest.getTitle());
+            post.setInfo(postRequest.getInfo());
             post.setContent(postRequest.getContent());
             post.setPostHashTags(hashTags);
-            post.setImages(images);
+            post.setImage(imageRepository.findByFileSaveName(postRequest.getImage()).get());
 
             basicResponse = BasicResponse.builder()
                     .code(HttpStatus.OK.value())

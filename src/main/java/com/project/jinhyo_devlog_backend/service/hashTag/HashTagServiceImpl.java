@@ -1,9 +1,11 @@
 package com.project.jinhyo_devlog_backend.service.hashTag;
 
+import com.project.jinhyo_devlog_backend.dto.HashTagDto;
 import com.project.jinhyo_devlog_backend.dto.HashTagResponse;
 import com.project.jinhyo_devlog_backend.entity.hashTag.HashTag;
 import com.project.jinhyo_devlog_backend.entity.hashTag.HashTagRepository;
 import com.project.jinhyo_devlog_backend.entity.post.Post;
+import com.project.jinhyo_devlog_backend.entity.post.PostRepository;
 import com.project.jinhyo_devlog_backend.entity.postTag.PostHashTag;
 import com.project.jinhyo_devlog_backend.entity.postTag.PostHashTagRepository;
 import com.project.jinhyo_devlog_backend.response.BasicResponse;
@@ -19,6 +21,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class HashTagServiceImpl implements HashTagService {
+    private final PostRepository postRepository;
 
     private final HashTagRepository hashTagRepository;
 
@@ -87,23 +90,29 @@ public class HashTagServiceImpl implements HashTagService {
 
     @Override
     public ResponseEntity<BasicResponse> getHashTag() {
+        List<Post> posts = postRepository.findAll();
         List<HashTag> hashTags = hashTagRepository.findAll();
-        List<HashTagResponse> hashTagResponses = new ArrayList<>();
+        List<HashTagDto> hashTagDtos = new ArrayList<>();
         BasicResponse basicResponse;
 
         for (HashTag hashTag : hashTags) {
             if (hashTag.getTotal() != 0) {
-                hashTagResponses.add(new HashTagResponse().toHashTagResponse(hashTag));
+                hashTagDtos.add(new HashTagDto().toHashTagResponse(hashTag));
             }
         }
 
-        if (!hashTagResponses.isEmpty()) {
+        if (!hashTagDtos.isEmpty()) {
+            HashTagResponse hashTagResponse = HashTagResponse.builder()
+                    .postCount((long) posts.size())
+                    .hashTags(hashTagDtos)
+                    .build();
+
             basicResponse = BasicResponse.builder()
                     .code(HttpStatus.OK.value())
                     .httpStatus(HttpStatus.OK)
                     .message("헤시태그를 정상적으로 찾았습니다.")
-                    .count(hashTagResponses.size())
-                    .result(hashTagResponses)
+                    .count(hashTagDtos.size())
+                    .result(hashTagResponse)
                     .build();
         } else {
             basicResponse = BasicResponse.builder()

@@ -85,8 +85,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void deleteImage(Post post) {
-        List<Image> images = post.getImages();
-        post.setImages(null);
+        List<Image> images = List.of(post.getImage());
+        post.setImage(null);
 
         for (Image image : images) {
             File file = new File(path + image.getFileSaveName());

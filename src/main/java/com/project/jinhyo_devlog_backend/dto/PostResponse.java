@@ -21,9 +21,11 @@ public class PostResponse {
 
     private String title;
 
+    private String info;
+
     private String content;
 
-    private List<Image> images;
+    private Image image;
 
     private List<HashTag> hashTags;
 
@@ -37,8 +39,9 @@ public class PostResponse {
         return PostResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
+                .info(post.getInfo())
                 .content(post.getContent())
-                .images(post.getImages())
+                .image(post.getImage())
                 .view(post.getView())
                 .createdAt(post.getCreatedAt())
                 .member(post.getMember())

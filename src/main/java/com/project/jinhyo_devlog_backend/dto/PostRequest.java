@@ -13,7 +13,11 @@ public class PostRequest {
 
     private String title;
 
+    private String info;
+
     private String content;
+
+    private String image;
 
     private List<String> hashTag;
 

@@ -25,10 +25,14 @@ public class Post {
 
     private String title;
 
+    private String info;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    @OneToMany
-    private List<Image> images;
+    @OneToOne
+    private Image image;
 
     @JsonIgnore
     @OneToMany(mappedBy = "post")

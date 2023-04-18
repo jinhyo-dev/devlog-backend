@@ -1,5 +1,6 @@
 package com.project.jinhyo_devlog_backend.security;
 
+import com.project.jinhyo_devlog_backend.entity.member.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -29,6 +30,8 @@ public class JWTProvider {
 
     private final long exp = 1000L * 60 * 60 * 3;
 
+    private final MemberRepository memberRepository;
+
     private final CustomUserDetailsService userDetailsService;
 
     @PostConstruct
@@ -39,6 +42,8 @@ public class JWTProvider {
     public String createToken(String email, String role) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", role);
+        claims.put("id", memberRepository.findByUsername(email).get().getId());
+
         Date now = new Date();
 
         return Jwts.builder()
