@@ -50,10 +50,12 @@ public class ImageServiceImpl implements ImageService {
                 if (ObjectUtils.isEmpty(contentType)) {
                     break;
                 } else {
-                    if(contentType.contains("image/jpeg")) {
-                        originalFileExtension = ".jpg";
-                    } else if(contentType.contains("image/png")) {
+                    if (contentType.contains("image/jpeg") || contentType.contains("image/heic") || contentType.contains("image/jpg")) {
+                        originalFileExtension = ".jpeg";
+                    } else if (contentType.contains("image/png")) {
                         originalFileExtension = ".png";
+                    } else if (contentType.contains("image/gif")) {
+                        originalFileExtension = ".gif";
                     } else {
                         break;
                     }
