@@ -31,9 +31,8 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<BasicResponse> editPost(@RequestPart PostRequest postRequest,
-                                                  @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles) throws IOException {
-        return postService.editPost(postRequest, multipartFiles);
+    public ResponseEntity<BasicResponse> editPost(@RequestBody PostRequest postRequest) throws IOException {
+        return postService.editPost(postRequest);
     }
 
     @DeleteMapping("/delete")

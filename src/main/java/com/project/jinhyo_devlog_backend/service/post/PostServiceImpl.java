@@ -253,7 +253,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<BasicResponse> editPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException {
+    public ResponseEntity<BasicResponse> editPost(PostRequest postRequest) {
         BasicResponse basicResponse;
         Optional<Post> postOpt = postRepository.findById(postRequest.getPostId());
 
@@ -270,7 +270,6 @@ public class PostServiceImpl implements PostService {
         } else {
             Post post = postOpt.get();
             postHashTagRepository.deleteAllByPost(post);
-            imageService.deleteImage(post);
 
             List<PostHashTag> hashTags = hashTagService.checkHashTag(post, postRequest.getHashTag());
 

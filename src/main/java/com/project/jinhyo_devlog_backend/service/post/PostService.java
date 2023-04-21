@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 public interface PostService {
@@ -18,7 +17,7 @@ public interface PostService {
 
     ResponseEntity<BasicResponse> addImage(MultipartFile multipartFile) throws IOException;
 
-    ResponseEntity<BasicResponse> editPost(PostRequest postRequest, List<MultipartFile> multipartFiles) throws IOException;
+    ResponseEntity<BasicResponse> editPost(PostRequest postRequest) throws IOException;
 
     ResponseEntity<BasicResponse> deletePost(Long id);
 
